@@ -368,4 +368,86 @@ body.modal-open {
   object-fit: cover;
 }
 
+.product-details.button {
+  padding: 0.75rem 1.25rem;
+  background-color: #b00;
+  color: white;
+  border-radius: 6px;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: fit-content;
+  margin-top: 1rem;
+}
 
+.product-details.button:hover {
+  background-color: #900;
+}
+
+.return-home-btn {
+  display: inline-block;
+  margin-top: 2rem;
+  padding: 0.75rem 1.5rem;
+  background-color: #b00;
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.return-home-btn:hover {
+  background-color: #900;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.video-banner {
+  height: 100vh; /* Full screen height */
+  width: 100vw;
+  position: relative;
+  overflow: hidden;
+}
+
+.video-banner video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+}
+
+main, .pdf-embed {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.pdf-embed {
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:visited {
+  color: inherit;
+}
+
+.product-card-link,
+.feature-btn,
+.return-home-btn {
+  border-radius: 12px;
+}
