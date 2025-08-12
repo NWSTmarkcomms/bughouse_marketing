@@ -43,27 +43,30 @@
     <h1 class="hero-title">Marketing Material Portal</h1>
   </section>
 
-<section class="feature-section"> 
+<section class="feature-section">  
   <div class="feature-content">
     <div class="feature-text-card">
       <h2>
-        <a href="door-hangers.html" class="feature-title-link">
+        <a href="#" class="feature-title-link" id="featureToggle">
           Which Marketing Material Fits Your Moment?
         </a>
       </h2>
-      <p><strong>Door Hangers (3.5x8.5")</strong><br>
-      Designed with your clover leafing strategy in mind.</p>
-      <p><strong>Flyers (8.5x11")</strong><br>
-      The largest way to share your services. Perfect for community boards, commercial leave-behinds, and high-impact messaging.</p>
-      <p><strong>Leave Behinds (4x9")</strong><br>
-      Designed for in-person connection and extraordinary events. A friendly, sleek way to continue the conversation.</p>
-      <p><strong>Takeover Cards (3x5")</strong><br>
-      Share $25 discounts to new customers at events.</p>
-      <p><strong>Thank You Cards (3x5")</strong><br>
-      A kind word goes a long way. Use these to show appreciation for your community or teammates.</p>
+      <div class="feature-details">
+        <p><strong>Door Hangers (3.5x8.5")</strong><br>
+        Designed with your clover leafing strategy in mind.</p>
+        <p><strong>Flyers (8.5x11")</strong><br>
+        The largest way to share your services. Perfect for community boards, commercial leave-behinds, and high-impact messaging.</p>
+        <p><strong>Leave Behinds (4x9")</strong><br>
+        Designed for in-person connection and extraordinary events. A friendly, sleek way to continue the conversation.</p>
+        <p><strong>Takeover Cards (3x5")</strong><br>
+        Share $25 discounts to new customers at events.</p>
+        <p><strong>Thank You Cards (3x5")</strong><br>
+        A kind word goes a long way. Use these to show appreciation for your community or teammates.</p>
+      </div>
     </div>
   </div>
 </section>
+
 
 
 
@@ -1386,7 +1389,7 @@
   </label>
 
   <!-- This section shows the expanded view -->
-  <label class="flyer-expanded-view" for="takeover-card">
+<label class="flyer-expanded-view" for="expand-takeover-card">
     <button aria-label="Close" class="flyer-close-button">×</button>
     <img
       alt="Takeover Card"
@@ -1452,6 +1455,23 @@ document.querySelectorAll('.expand-checkbox').forEach(cb => {
   });
 });
 
+<script>
+// Close modal on ESC key
+document.addEventListener("keydown", function (e) {
+  if (e.key === "Escape") {
+    document.querySelectorAll(".expand-checkbox").forEach(cb => cb.checked = false);
+    document.body.classList.remove('modal-open');
+  }
+});
+
+// Correct scroll lock toggle on checkbox change
+document.querySelectorAll('.expand-checkbox').forEach(cb => {
+  cb.addEventListener('change', () => {
+    const anyOpen = Array.from(document.querySelectorAll('.expand-checkbox')).some(input => input.checked);
+    document.body.classList.toggle('modal-open', anyOpen);
+  });
+});
+
 // Close modal on close button click
 document.querySelectorAll('.flyer-close-button').forEach(btn => {
   btn.addEventListener('click', (e) => {
@@ -1462,20 +1482,40 @@ document.querySelectorAll('.flyer-close-button').forEach(btn => {
       const input = document.getElementById(inputId);
       if (input) input.checked = false;
     }
-
     const anyOpen = Array.from(document.querySelectorAll('.expand-checkbox')).some(input => input.checked);
     document.body.classList.toggle('modal-open', anyOpen);
   });
 });
 
-  document.getElementById('portalSearch').addEventListener('input', function () {
-    const searchTerm = this.value.toLowerCase();
-    const cards = document.querySelectorAll('.product-card');
-    cards.forEach(card => {
-      const title = card.querySelector('.product-title').textContent.toLowerCase();
-      card.style.display = title.includes(searchTerm) ? 'block' : 'none';
-    });
+// Search filter
+document.getElementById('portalSearch').addEventListener('input', function () {
+  const searchTerm = this.value.toLowerCase();
+  document.querySelectorAll('.product-card').forEach(card => {
+    const title = card.querySelector('.product-title').textContent.toLowerCase();
+    card.style.display = title.includes(searchTerm) ? 'block' : 'none';
   });
+});
+
+// Feature section reveal
+(function () {
+  const link = document.getElementById("featureToggle");
+  const details = document.querySelector(".feature-details");
+  if (!link || !details) return;
+
+  link.setAttribute("role", "button");
+  link.setAttribute("aria-controls", "featureDetails");
+  link.setAttribute("aria-expanded", "false");
+  details.id = "featureDetails";
+
+  link.addEventListener("click", function (e) {
+    e.preventDefault();
+    const open = details.classList.toggle("show");
+    link.setAttribute("aria-expanded", open ? "true" : "false");
+  });
+})();
+</script>
+
+
 
 </script>
 </body>
