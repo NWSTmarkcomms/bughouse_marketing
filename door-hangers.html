@@ -43,28 +43,29 @@
     <h1 class="hero-title">Marketing Material Portal</h1>
   </section>
 
-<section class="feature-section"> 
+<section class="feature-section" id="featureSection" aria-expanded="false">
   <div class="feature-content">
     <div class="feature-text-card">
       <h2>
-        <a href="door-hangers.html" class="feature-title-link">
+        <a href="#" class="feature-title-link" id="featureToggle" role="button" aria-controls="featureDetails" aria-expanded="false">
           Which Marketing Material Fits Your Moment?
         </a>
       </h2>
-      <p><strong>Door Hangers (3.5x8.5")</strong><br>
-      Designed with your clover leafing strategy in mind.</p>
-      <p><strong>Flyers (8.5x11")</strong><br>
-      The largest way to share your services. Perfect for community boards, commercial leave-behinds, and high-impact messaging.</p>
-      <p><strong>Leave Behinds (4x9")</strong><br>
-      Designed for in-person connection and extraordinary events. A friendly, sleek way to continue the conversation.</p>
-      <p><strong>Takeover Cards (3x5")</strong><br>
-      Share $25 discounts to new customers at events.</p>
-      <p><strong>Thank You Cards (3x5")</strong><br>
-      A kind word goes a long way. Use these to show appreciation for your community or teammates.</p>
+      <div class="feature-details">
+        <p><strong>Door Hangers (3.5x8.5")</strong><br>
+        Designed with your clover leafing strategy in mind.</p>
+        <p><strong>Flyers (8.5x11")</strong><br>
+        The largest way to share your services. Perfect for community boards, commercial leave-behinds, and high-impact messaging.</p>
+        <p><strong>Leave Behinds (4x9")</strong><br>
+        Designed for in-person connection and extraordinary events. A friendly, sleek way to continue the conversation.</p>
+        <p><strong>Takeover Cards (3x5")</strong><br>
+        Share $25 discounts to new customers at events.</p>
+        <p><strong>Thank You Cards (3x5")</strong><br>
+        A kind word goes a long way. Use these to show appreciation for your community or teammates.</p>
+      </div>
     </div>
   </div>
 </section>
-
 
   <main class="product-grid">
 
@@ -660,5 +661,37 @@ document.querySelectorAll('.flyer-close-button').forEach(btn => {
   });
 
 </script>
+
+<script>
+(function () {
+  const section = document.getElementById('featureSection');
+  const title = document.getElementById('featureToggle');
+  const content = section.querySelector('.feature-content');
+  const details = document.getElementById('featureDetails');
+
+  function toggle(e) {
+    if (e) e.preventDefault();
+    const isOpen = section.classList.toggle('open');
+    details.classList.toggle('show', isOpen);
+    section.setAttribute('aria-expanded', isOpen);
+    title.setAttribute('aria-expanded', isOpen);
+  }
+
+  // Open/close when clicking the title
+  title.addEventListener('click', toggle);
+
+  // Also allow clicking the card area; ignore clicks on links inside details
+  content.addEventListener('click', (e) => {
+    if (e.target.closest('.feature-details a') && e.target !== title) return;
+    // prevent double-trigger when the title itself is clicked
+    if (e.target.closest('#featureToggle')) return;
+    toggle(e);
+  });
+
+  // Optional: open by default on large screens
+  // if (window.matchMedia('(min-width: 1024px)').matches) toggle();
+})();
+</script>
+
 </body>
 </html>

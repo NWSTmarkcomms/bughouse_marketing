@@ -43,14 +43,15 @@
     <h1 class="hero-title">Marketing Material Portal</h1>
   </section>
 
-<section class="feature-section"> 
+<section class="feature-section" id="featureSection" aria-expanded="false">
   <div class="feature-content">
     <div class="feature-text-card">
       <h2>
-        <a href="door-hangers.html" class="feature-title-link">
+        <a href="#" class="feature-title-link" id="featureToggle" role="button" aria-controls="featureDetails" aria-expanded="false">
           Which Marketing Material Fits Your Moment?
         </a>
       </h2>
+      <div class="feature-details" id="featureDetails">
       <p><strong>Door Hangers (3.5x8.5")</strong><br>
       Designed with your clover leafing strategy in mind.</p>
       <p><strong>Flyers (8.5x11")</strong><br>
@@ -181,6 +182,37 @@ document.querySelectorAll('.flyer-close-button').forEach(btn => {
     });
   });
 
+</script>
+
+<script>
+(function () {
+  const section = document.getElementById('featureSection');
+  const title = document.getElementById('featureToggle');
+  const content = section.querySelector('.feature-content');
+  const details = document.getElementById('featureDetails');
+
+  function toggle(e) {
+    if (e) e.preventDefault();
+    const isOpen = section.classList.toggle('open');
+    details.classList.toggle('show', isOpen);
+    section.setAttribute('aria-expanded', isOpen);
+    title.setAttribute('aria-expanded', isOpen);
+  }
+
+  // Open/close when clicking the title
+  title.addEventListener('click', toggle);
+
+  // Also allow clicking the card area; ignore clicks on links inside details
+  content.addEventListener('click', (e) => {
+    if (e.target.closest('.feature-details a') && e.target !== title) return;
+    // prevent double-trigger when the title itself is clicked
+    if (e.target.closest('#featureToggle')) return;
+    toggle(e);
+  });
+
+  // Optional: open by default on large screens
+  // if (window.matchMedia('(min-width: 1024px)').matches) toggle();
+})();
 </script>
 </body>
 </html>

@@ -479,3 +479,18 @@ a:visited {
 }
 
 /* Add the .open class when revealing */
+/* in style.css */
+.feature-details { display: none; }
+.feature-details.show { display: block; }
+
+/* tighten hero + feature spacing */
+.hero-banner { padding: 1.25rem 2rem; }          /* was 2rem */
+.feature-section { padding: 1rem 0; margin: 0; }  /* was 4rem 2rem */
+.feature-content { cursor: pointer; }
+
+/* accordion states */
+.feature-details { display: none; }
+.feature-section.open .feature-details { display: block; }
+
+/* optional: reduce gap above the grid a touch */
+.product-grid { padding-top: 0.75rem; }           /* was 1rem */
