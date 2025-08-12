@@ -141,57 +141,59 @@
     
   </main>
 <script>
-// Close modal on ESC key
-document.addEventListener("keydown", function (e) {
-  if (e.key === "Escape") {
-    document.querySelectorAll(".expand-checkbox").forEach(cb => cb.checked = false);
-    document.body.classList.remove('modal-open');
+document.addEventListener('DOMContentLoaded', () => {
+  const checkboxes = Array.from(document.querySelectorAll('.expand-checkbox'));
+
+  function updateScrollLock() {
+    const anyOpen = checkboxes.some(cb => cb.checked);
+    document.body.classList.toggle('modal-open', anyOpen);
   }
-});
 
-// Correct scroll lock toggle on checkbox change
-document.querySelectorAll('.expand-checkbox').forEach(cb => {
-  cb.addEventListener('change', () => {
-    const anyOpen = Array.from(document.querySelectorAll('.expand-checkbox')).some(input => input.checked);
-    document.body.classList.toggle('modal-open', anyOpen);
-  });
-});
+  // Toggle scroll lock when any modal checkbox changes
+  checkboxes.forEach(cb => cb.addEventListener('change', updateScrollLock));
 
-// Close modal on close button click
-document.querySelectorAll('.flyer-close-button').forEach(btn => {
-  btn.addEventListener('click', (e) => {
-    e.preventDefault();
-    const label = btn.closest('.flyer-expanded-view');
-    if (label) {
-      const inputId = label.getAttribute('for');
-      const input = document.getElementById(inputId);
-      if (input) input.checked = false;
+  // Close on ESC
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      checkboxes.forEach(cb => cb.checked = false);
+      updateScrollLock();
     }
-
-    const anyOpen = Array.from(document.querySelectorAll('.expand-checkbox')).some(input => input.checked);
-    document.body.classList.toggle('modal-open', anyOpen);
   });
-});
 
-  document.getElementById('portalSearch').addEventListener('input', function () {
-    const searchTerm = this.value.toLowerCase();
-    const cards = document.querySelectorAll('.product-card');
-    cards.forEach(card => {
-      const title = card.querySelector('.product-title').textContent.toLowerCase();
-      card.style.display = title.includes(searchTerm) ? 'block' : 'none';
+  // Close when clicking the "×" button
+  document.querySelectorAll('.flyer-close-button').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault(); // prevent the label default toggle
+      const label = btn.closest('.flyer-expanded-view');
+      if (label) {
+        const inputId = label.getAttribute('for');
+        const input = document.getElementById(inputId);
+        if (input) input.checked = false;
+      }
+      updateScrollLock();
     });
   });
 
-</script>
+  // Search filter
+  const search = document.getElementById('portalSearch');
+  if (search) {
+    search.addEventListener('input', function () {
+      const q = this.value.toLowerCase();
+      document.querySelectorAll('.product-card').forEach(card => {
+        const title = (card.querySelector('.product-title')?.textContent || '').toLowerCase();
+        card.style.display = title.includes(q) ? 'block' : 'none';
+      });
+    });
+  }
 
-<script>
-(function () {
+  // Feature accordion (robust to missing IDs)
   const section = document.getElementById('featureSection');
   const title = document.getElementById('featureToggle');
-  const content = section.querySelector('.feature-content');
-  const details = document.getElementById('featureDetails');
+  const content = section?.querySelector('.feature-content');
+  const details = document.getElementById('featureDetails') || section?.querySelector('.feature-details');
 
-  function toggle(e) {
+  function toggleFeature(e) {
+    if (!section || !title || !details) return;
     if (e) e.preventDefault();
     const isOpen = section.classList.toggle('open');
     details.classList.toggle('show', isOpen);
@@ -199,20 +201,16 @@ document.querySelectorAll('.flyer-close-button').forEach(btn => {
     title.setAttribute('aria-expanded', isOpen);
   }
 
-  // Open/close when clicking the title
-  title.addEventListener('click', toggle);
-
-  // Also allow clicking the card area; ignore clicks on links inside details
-  content.addEventListener('click', (e) => {
-    if (e.target.closest('.feature-details a') && e.target !== title) return;
-    // prevent double-trigger when the title itself is clicked
-    if (e.target.closest('#featureToggle')) return;
-    toggle(e);
-  });
-
-  // Optional: open by default on large screens
-  // if (window.matchMedia('(min-width: 1024px)').matches) toggle();
-})();
+  if (title) title.addEventListener('click', toggleFeature);
+  if (content) {
+    content.addEventListener('click', (e) => {
+      if (e.target.closest('.feature-details a') && e.target !== title) return;
+      if (e.target.closest('#featureToggle')) return;
+      toggleFeature(e);
+    });
+  }
+});
 </script>
+
 </body>
 </html>
