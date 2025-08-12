@@ -452,15 +452,12 @@ a:visited {
   border-radius: 12px;
 }
 
-.feature-link {
-  display: block;
-  text-decoration: none;
+.feature-title-link {
   color: inherit;
+  text-decoration: none;
 }
 
-.feature-link:hover .feature-content {
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.15);
-  transform: scale(1.02);
-  transition: all 0.3s ease;
+.feature-title-link:hover {
+  text-decoration: underline;
+  color: #b00; /* or your brand color */
 }
-
