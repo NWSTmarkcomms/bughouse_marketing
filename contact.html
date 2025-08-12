@@ -6,6 +6,12 @@
   <title>Product Flyers</title>
   <link rel="stylesheet" href="style.css" />
   <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
     .form-group {
       margin-bottom: 1rem;
       display: flex;
@@ -72,14 +78,13 @@
       <h1 style="color: #b00; text-align: center;">How Can We Help?</h1>
       <p style="text-align: center;">Share Your Custom Request Here!</p>
 
-<form id="contactForm" style="display: flex; flex-direction: column; gap: 1rem;">
-  <input type="text" name="fullName" placeholder="Name" required />
-  <input type="email" name="email" placeholder="Email" required />
-  <input type="text" name="subject" placeholder="Subject" required />
-  <textarea name="message" placeholder="Share Your Request Here!" rows="4" required></textarea>
-  <button type="submit" class="button">Send Message</button>
-</form>
-
+      <form id="contactForm" style="display: flex; flex-direction: column; gap: 1rem;">
+        <input type="text" name="fullName" placeholder="Name" required />
+        <input type="email" name="email" placeholder="Email" required />
+        <input type="text" name="subject" placeholder="Subject" required />
+        <textarea name="message" placeholder="Share Your Request Here!" rows="4" required></textarea>
+        <button type="submit" class="button">Send Message</button>
+      </form>
 
       <div id="thankYouMessage" style="display:none; margin-top:1.5rem; color:green; font-weight:bold; text-align: center;">
         ✅ Thanks! We'll be in touch shortly.
@@ -98,18 +103,12 @@
       event.preventDefault();
 
       const form = event.target;
-      const formData = {
-        fullName: form.fullName.value,
-        email: form.email.value,
-        subject: form.subject.value,
-        message: form.message.value
-      };
+      const formData = new FormData(form); // sends as multipart/form-data
 
       try {
         const res = await fetch(ZAPIER_WEBHOOK_URL, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formData)
+          body: formData
         });
 
         if (res.ok) {

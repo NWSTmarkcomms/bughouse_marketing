@@ -461,3 +461,21 @@ a:visited {
   text-decoration: underline;
   color: #b00; /* or your brand color */
 }
+
+.feature-details {
+  display: none; /* hide initially */
+}
+
+.feature-details.show {
+  display: block; /* show when toggled */
+}
+
+/* Closed state: keep it minimal */
+.feature-section:not(.open) .feature-content {
+  border: none;
+  box-shadow: none;
+  background: transparent;
+  padding: 0;
+}
+
+/* Add the .open class when revealing */
