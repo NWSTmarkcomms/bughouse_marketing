@@ -58,6 +58,14 @@
     button:hover {
       background-color: #900;
     }
+
+    .thank-you {
+      display: none;
+      margin-top: 1rem;
+      color: green;
+      font-weight: bold;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
@@ -98,7 +106,7 @@
         action="https://hooks.zapier.com/hooks/catch/12716030/um977t9/" 
         method="POST" 
         target="hiddenFrame"
-        onsubmit="setTimeout(() => { window.location.href = 'https://bughousesuccess.netlify.app/'; }, 1000);"
+        onsubmit="document.getElementById('thankYou').style.display='block'; setTimeout(() => { location.reload(); }, 1500);"
       >
         <input type="text" name="Name" placeholder="Your Name" required />
         <input type="email" name="Email" placeholder="Your Email" required />
@@ -110,6 +118,10 @@
 
         <button type="submit">Send Message</button>
       </form>
+
+      <div id="thankYou" class="thank-you">
+        ✅ Thanks! Your message has been sent.
+      </div>
     </div>
   </main>
 
